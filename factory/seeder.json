@@ -1,0 +1,6 @@
+[
+    {
+        "type": "<telegram o slack>",
+        "token": "<token>" 
+    }
+]
