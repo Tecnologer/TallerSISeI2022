@@ -1,0 +1,4 @@
+.vscode/
+./*json
+go.sum
+messenger_app

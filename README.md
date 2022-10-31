@@ -50,6 +50,24 @@ cd $GOPATH/src/github.com/tecnologer/TallerSISeI2022
 go mod tidy
 ```
 
+## Compilacion / Ejecucion
+
+### Compilar
+
+1. Navegamos al folder del proyecto
+   - `cd $GOPATH/src/github.com/tecnologer/TallerSISeI2022`
+1. Compilamos
+   - `go build -o messenger_app ./cmd/cli`
+1. Ejecutamos 
+   - `./messenger_app`
+
+### Ejecucion directa
+
+1. Navegamos al folder del proyecto
+   - `cd $GOPATH/src/github.com/tecnologer/TallerSISeI2022`
+1. Ejecutamos
+   - `go run ./cmd/cli`
+
 [1]: https://www.digitalocean.com/community/tutorials/understanding-the-gopath-es
 [2]: https://go.dev/dl/
 [3]: https://code.visualstudio.com/

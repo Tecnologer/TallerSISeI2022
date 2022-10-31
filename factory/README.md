@@ -14,11 +14,11 @@ Para agregar un nuevo servicio, basta con crear/modificar el objeto correspondie
 [
     {
         "type": "telegram",
-        "token": "blablablabal2765678903"
+        "token": "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
     },
     {
         "type": "slack",
-        "token": "slakc-token-1238632765678903"
+        "token": "xoxb-123445677-2353253636236j-akanjndjbkbd7318721"
     }
 ]
 ```

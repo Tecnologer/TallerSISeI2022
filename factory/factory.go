@@ -1,8 +1,11 @@
+//factory es un paquete encargado de automatizar la carga de servicios
+//de mensajeria de manera automatica
 package factory
 
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"runtime"
@@ -12,9 +15,13 @@ import (
 	"github.com/tecnologer/SISeI/telegram"
 )
 
+//seederPath nombre del archivo JSON de donde se leeran los tokens para iniciarlizar los servicios
 const seederPath = "seeder.json"
 
-func Load(t Type) ([]messenger.Messenger, error) {
+//Load carga la informacion de los servicios que se encuentran en el archivo seeder.json
+//
+//retorna un map (hashtable) donde el key corresponde al nombre y el valor es la instancia del servicio
+func Load(t Type) (map[string]messenger.Messenger, error) {
 	var services []*messengerFactory
 
 	f, err := os.Open(getCompleteSeederPath())
@@ -28,23 +35,26 @@ func Load(t Type) ([]messenger.Messenger, error) {
 		return nil, err
 	}
 
-	messengers := make([]messenger.Messenger, 0)
-	for _, service := range services {
+	messengers := map[string]messenger.Messenger{}
+
+	for i, service := range services {
 		if t != All && service.Type != t {
 			continue
 		}
 
-		switch service.Type {
-		case Telegram:
-			messengers = append(messengers, telegram.New(service.Token))
-		case Slack:
-			messengers = append(messengers, slack.New(service.Token))
+		name := fmt.Sprintf("%s%d", service.Type, i)
+
+		if service := createService(service.Type, service.Token); service != nil {
+			messengers[name] = service
 		}
+
+		log.Printf("factory: servicio %s cargado correctamente\n", service.Type)
 	}
 
 	return messengers, nil
 }
 
+//getCompleteSeederPath regresa un string que corresponde a la ruta absoluta del archivo seeder.json
 func getCompleteSeederPath() string {
 	_, filename, _, ok := runtime.Caller(1)
 	if !ok {
@@ -52,4 +62,16 @@ func getCompleteSeederPath() string {
 	}
 
 	return fmt.Sprintf("%s/%s", path.Dir(filename), seederPath)
+}
+
+//createService crea una instancia del tipo de servicio especificado
+func createService(t Type, token string) messenger.Messenger {
+	switch t {
+	case Telegram:
+		return telegram.New(token)
+	case Slack:
+		return slack.New(token)
+	}
+
+	return nil
 }
