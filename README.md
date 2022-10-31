@@ -50,6 +50,10 @@ cd $GOPATH/src/github.com/tecnologer/TallerSISeI2022
 go mod tidy
 ```
 
+## Configuracion de los bots
+
+Los tokens para utilizar los bots se definen en el package [factory](/factory), se deben de agregar al archivo JSON como lo marca el README.
+
 ## Compilacion / Ejecucion
 
 ### Compilar
